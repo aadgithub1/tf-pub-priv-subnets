@@ -3,8 +3,14 @@ provider "aws" {
 }
 
 // TO-DO
-# make two private subnets
-# put one private subnet in each availability zone (us-east-2a and us-east-2b)
+# create IGW
+# make public route table
+# associate public subnets with public route table
+# point public route table to IGW
+# 
+# make private route table
+# associate private subnets with private route table
+
 
 resource "aws_vpc" "main" {
   cidr_block       = "10.0.0.0/16"
@@ -53,4 +59,13 @@ resource "aws_subnet" "priv_subnet_b" {
   tags = {
     Name = "private-subnet-b"
   }
+}
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "main-igw"
+  }
+
 }

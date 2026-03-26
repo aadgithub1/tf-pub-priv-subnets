@@ -17,3 +17,7 @@ output "priv-subnet-a-id" {
 output "priv-subnet-b-id" {
   value = aws_subnet.priv_subnet_b.id
 }
+
+output "igw-id" {
+  value = aws_internet_gateway.igw.id
+}
