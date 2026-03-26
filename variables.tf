@@ -1,5 +1,5 @@
 variable "vpc-name" {
-  type = string
+  type        = string
   description = "the name of the vpc"
-  default = "main-vpc"
+  default     = "main-vpc"
 }
