@@ -82,6 +82,14 @@ resource "aws_route_table" "pub_route_table" {
   }
 }
 
+resource "aws_route_table" "priv_route_table" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "private-route-table"
+  }
+}
+
 resource "aws_route_table_association" "pub_subnet_a_assoc" {
   subnet_id      = aws_subnet.pub_subnet_a.id
   route_table_id = aws_route_table.pub_route_table.id
@@ -90,4 +98,14 @@ resource "aws_route_table_association" "pub_subnet_a_assoc" {
 resource "aws_route_table_association" "pub_subnet_b_assoc" {
   subnet_id      = aws_subnet.pub_subnet_b.id
   route_table_id = aws_route_table.pub_route_table.id
+}
+
+resource "aws_route_table_association" "priv_subnet_a_assoc" {
+  subnet_id      = aws_subnet.priv_subnet_a.id
+  route_table_id = aws_route_table.priv_route_table.id
+}
+
+resource "aws_route_table_association" "priv_subnet_b_assoc" {
+  subnet_id      = aws_subnet.priv_subnet_b.id
+  route_table_id = aws_route_table.priv_route_table.id
 }

@@ -25,3 +25,7 @@ output "igw-id" {
 output "pub-route-table-id" {
   value = aws_route_table.pub_route_table.id
 }
+
+output "priv-route-table-id" {
+  value = aws_route_table.priv_route_table.id
+}
