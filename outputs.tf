@@ -21,3 +21,7 @@ output "priv-subnet-b-id" {
 output "igw-id" {
   value = aws_internet_gateway.igw.id
 }
+
+output "pub-route-table-id" {
+  value = aws_route_table.pub_route_table.id
+}

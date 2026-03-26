@@ -3,7 +3,6 @@ provider "aws" {
 }
 
 // TO-DO
-# create IGW
 # make public route table
 # associate public subnets with public route table
 # point public route table to IGW
@@ -68,4 +67,27 @@ resource "aws_internet_gateway" "igw" {
     Name = "main-igw"
   }
 
+}
+
+resource "aws_route_table" "pub_route_table" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "public-route-table"
+  }
+}
+
+resource "aws_route_table_association" "pub_subnet_a_assoc" {
+  subnet_id      = aws_subnet.pub_subnet_a.id
+  route_table_id = aws_route_table.pub_route_table.id
+}
+
+resource "aws_route_table_association" "pub_subnet_b_assoc" {
+  subnet_id      = aws_subnet.pub_subnet_b.id
+  route_table_id = aws_route_table.pub_route_table.id
 }
