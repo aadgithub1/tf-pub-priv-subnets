@@ -2,15 +2,11 @@ provider "aws" {
   region = "us-east-2"
 }
 
-data "aws_ssm_parameter" "amzn-linux" {
-  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
-}
-
-resource "aws_instance" "web-server" {
-  ami           = data.aws_ssm_parameter.amzn-linux.value
-  instance_type = "t3.micro"
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  instance_tenancy = "default"
 
   tags = {
-    Name = var.instance-name
+    Name = var.vpc-name
   }
 }

@@ -1,5 +1,5 @@
-variable "instance-name" {
-  description = "the name of the instance"
-  type        = string
-  default     = "new-instance"
+variable "vpc-name" {
+  type = string
+  description = "the name of the vpc"
+  default = "main-vpc"
 }
