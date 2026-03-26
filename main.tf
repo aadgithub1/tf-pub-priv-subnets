@@ -3,12 +3,11 @@ provider "aws" {
 }
 
 // TO-DO
-# make public route table
-# associate public subnets with public route table
-# point public route table to IGW
-# 
-# make private route table
-# associate private subnets with private route table
+# create EC2 instance in public subnet
+# create EC2 instance in private subnet
+# demonstrate that the public instance can access the internet
+# demonstrate that the private instance cannot access the internet
+
 
 
 resource "aws_vpc" "main" {
