@@ -3,7 +3,6 @@ provider "aws" {
 }
 
 // TO-DO
-# create EC2 instance in public subnet
 # create EC2 instance in private subnet
 # demonstrate that the public instance can access the internet
 # demonstrate that the private instance cannot access the internet
@@ -20,9 +19,10 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "pub_subnet_a" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.0.0/24"
-  availability_zone = "us-east-2a"
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.0.0/24"
+  availability_zone       = "us-east-2a"
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "public-subnet-a"
