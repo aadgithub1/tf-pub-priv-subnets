@@ -7,4 +7,10 @@ terraform {
   }
 
   required_version = ">=1.2"
+
+  backend "s3" {
+    bucket = "amzn-aaron-tf-state-bucket"
+    key    = "network/terraform.tfstate"
+    region = "us-east-2"
+  }
 }
