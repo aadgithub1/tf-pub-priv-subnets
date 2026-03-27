@@ -108,3 +108,13 @@ resource "aws_route_table_association" "priv_subnet_b_assoc" {
   subnet_id      = aws_subnet.priv_subnet_b.id
   route_table_id = aws_route_table.priv_route_table.id
 }
+
+resource "aws_instance" "public_instance" {
+  ami           = data.aws_ssm_parameter.al2023_ami.value
+  instance_type = "t3.micro"
+  subnet_id     = aws_subnet.pub_subnet_a.id
+
+  tags = {
+    Name = "public-instance"
+  }
+}

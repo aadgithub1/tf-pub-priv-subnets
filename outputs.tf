@@ -29,3 +29,7 @@ output "pub-route-table-id" {
 output "priv-route-table-id" {
   value = aws_route_table.priv_route_table.id
 }
+
+output "public-instance-id" {
+  value = aws_instance.public_instance.id
+}
