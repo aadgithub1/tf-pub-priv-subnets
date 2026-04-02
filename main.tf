@@ -109,10 +109,50 @@ resource "aws_route_table_association" "priv_subnet_b_assoc" {
   route_table_id = aws_route_table.priv_route_table.id
 }
 
+resource "aws_security_group" "public_instance_sg" {
+  name        = "public-instance-sg"
+  description = "Allow HTTP from anywhere"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "All outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "public-instance-sg"
+  }
+}
+
 resource "aws_instance" "public_instance" {
-  ami           = data.aws_ssm_parameter.al2023_ami.value
-  instance_type = "t3.micro"
-  subnet_id     = aws_subnet.pub_subnet_a.id
+  ami                    = data.aws_ssm_parameter.al2023_ami.value
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.pub_subnet_a.id
+  vpc_security_group_ids = [aws_security_group.public_instance_sg.id]
+
+  user_data = <<-EOF
+  #!/bin/bash
+  dnf install -y nginx
+  echo 'Hello world from Terraform' > /usr/share/nginx/html/index.html
+  systemctl enable --now nginx
+  EOF
 
   tags = {
     Name = "public-instance"
