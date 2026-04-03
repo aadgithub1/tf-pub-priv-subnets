@@ -149,9 +149,18 @@ resource "aws_instance" "public_instance" {
 
   user_data = <<-EOF
   #!/bin/bash
-  dnf install -y nginx
-  echo 'Hello world from Terraform' > /usr/share/nginx/html/index.html
-  systemctl enable --now nginx
+  # Update system packages
+  yum update -y
+
+  # Install Apache HTTP Server
+  yum install -y httpd
+
+  # Start and enable Apache to run on boot
+  systemctl start httpd
+  systemctl enable httpd
+
+  # Create a simple Hello World HTML page
+  echo "<html><body><h1>Hello World from EC2!</h1></body></html>" > /var/www/html/index.html
   EOF
 
   tags = {
